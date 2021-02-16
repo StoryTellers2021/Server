@@ -44,11 +44,6 @@ class TestWord {
 		Word test3 = new Word("alphabetical");
 		Word test4 = new Word("goodbye");
 		
-		test.scramble();
-		test2.scramble();
-		test3.scramble();
-		test4.scramble();
-		
 		assertEquals(false, test.getScrambledWord().equals("Hello"));
 		assertEquals(false, test2.getScrambledWord().equals("test"));
 		assertEquals(false, test3.getScrambledWord().equals("alphabetical"));
