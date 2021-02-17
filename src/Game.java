@@ -19,21 +19,21 @@ public class Game {
 	}
 	
 	public int getScore(int index) throws IndexOutOfBoundsException {
-		if(index < 0 || index >= this.totalWords) {
+		if(index < 0 || index >= this.studentList.length) {
 			throw new IndexOutOfBoundsException("getScore: Invalid word index of " + index + "!");
 		}
 		return this.scoreList[index];
 	}
 	
 	public int wordsUnScrambled(int index) throws IndexOutOfBoundsException {
-		if(index < 0 || index >= this.totalWords) {
+		if(index < 0 || index >= this.studentList.length) {
 			throw new IndexOutOfBoundsException("getScore: Invalid word index of " + index + "!");
 		}
 		return this.unScrambled[index];
 	}
 	
 	public int wordsLeft(int index) throws IndexOutOfBoundsException {
-		if(index < 0 || index >= this.totalWords) {
+		if(index < 0 || index >= this.studentList.length) {
 			throw new IndexOutOfBoundsException("getScore: Invalid word index of " + index + "!");
 		}
 		return this.totalWords - this.wordsUnScrambled(index);
