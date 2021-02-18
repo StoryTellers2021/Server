@@ -27,24 +27,36 @@ public class Story {
 		Arrays.sort(scrambledWordIndexes); // getUnsolvedStory needs this to be in ascending order.
 		final int wordCount = this.wordCount, scrambledWordCount = scrambledWordIndexes.length;
 		String[] scrambledWords = new String[scrambledWordCount];
-		for(int scrambledWordIndexesIndex = 0; scrambledWordIndexesIndex < scrambledWordCount; scrambledWordIndexesIndex++) {
-			final int wordIndex = scrambledWordIndexes[scrambledWordIndexesIndex];
+		for(int solvableWordIndex = 0; solvableWordIndex < scrambledWordCount; solvableWordIndex++) {
+			final int wordIndex = scrambledWordIndexes[solvableWordIndex];
 			if(wordIndex < 0 || wordIndex >= wordCount) {
 				throw new IndexOutOfBoundsException("scrambleWordsAt: Invalid word index of " + wordIndex + '!');
 			}
-			scrambledWords[scrambledWordIndexesIndex] = scramble(this.words[wordIndex]);
+			scrambledWords[solvableWordIndex] = scramble(this.words[wordIndex]);
 		}
 		this.scrambledWordIndexes = scrambledWordIndexes;
 		this.scrambledWords = scrambledWords;
 		this.scrambledWordCount = scrambledWordCount;
 	}
 	
-	public int scoreSolution(final String solution, final int wordIndex) throws IndexOutOfBoundsException {
+	public String getUnsolvedWordBySolvableIndex(final int solvableWordIndex) throws IndexOutOfBoundsException {
 		final int scrambledWordCount = this.scrambledWordCount;
-		if(wordIndex < 0 || wordIndex >= scrambledWordCount) {
-			throw new IndexOutOfBoundsException("scoreSolution: Invalid word index of " + wordIndex + '!');
+		if(solvableWordIndex < 0 || solvableWordIndex >= scrambledWordCount) {
+			throw new IndexOutOfBoundsException("getUnsolvedWordBySolvableIndex: Invalid solvable word index of " + solvableWordIndex + '!');
 		}
-		return this.words[this.scrambledWordIndexes[wordIndex]].equals(solution) ? 1 : 0;
+		return this.scrambledWords[solvableWordIndex];
+	}
+	
+	public String getSolvedWordBySolvableIndex(final int solvableWordIndex) throws IndexOutOfBoundsException {
+		final int scrambledWordCount = this.scrambledWordCount;
+		if(solvableWordIndex < 0 || solvableWordIndex >= scrambledWordCount) {
+			throw new IndexOutOfBoundsException("getSolvedWordBySolvableIndex: Invalid solvable word index of " + solvableWordIndex + '!');
+		}
+		return this.words[this.scrambledWordIndexes[solvableWordIndex]];
+	}
+	
+	public int scoreSolution(final String solution, final int solvableWordIndex) throws IndexOutOfBoundsException {
+		return this.getSolvedWordBySolvableIndex(solvableWordIndex).equals(solution) ? 1 : 0;
 	}
 	
 	public String getUnsolvedStory() {
@@ -53,15 +65,15 @@ public class Story {
 			return this.getSolvedStory();
 		final int wordCount = this.wordCount;
 		final StringBuilder s = new StringBuilder(this.storyCharLength);
-		int scrambledWordIndexesIndex = 0;
-		int scrambledWordIndex = this.scrambledWordIndexes[scrambledWordIndexesIndex];
+		int solvableWordIndex = 0;
+		int scrambledWordIndex = this.scrambledWordIndexes[solvableWordIndex];
 		String word;
 		for(int wordIndex = 0; wordIndex < wordCount; wordIndex++) {
 			if(scrambledWordIndex == wordIndex) {
-				word = this.scrambledWords[scrambledWordIndexesIndex];
-				if(++scrambledWordIndexesIndex >= scrambledWordCount)
+				word = this.scrambledWords[solvableWordIndex];
+				if(++solvableWordIndex >= scrambledWordCount)
 					scrambledWordIndex = -1;
-				else scrambledWordIndex = this.scrambledWordIndexes[scrambledWordIndexesIndex];
+				else scrambledWordIndex = this.scrambledWordIndexes[solvableWordIndex];
 			} else word = this.words[wordIndex];
 			s.append(wordIndex == wordCount - 1 ? word : word + ' ');
 		}
@@ -82,7 +94,7 @@ public class Story {
 		return this.scrambledWordIndexes;
 	}
 	
-	private static String scramble(String word) {
+	private static String scramble(final String word) {
 		int len = word.length();
 		char[] parse = new char[len];
 		int[] index = new int[len]; 

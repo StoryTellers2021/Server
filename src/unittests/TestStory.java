@@ -15,7 +15,7 @@ class TestStory {
 		
 		
 		
-		Story s = new Story(story, index);
+		Story s = new Story(story);
 		s.scrambleWordsAt(index);
 		
 
