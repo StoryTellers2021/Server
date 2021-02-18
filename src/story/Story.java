@@ -54,14 +54,14 @@ public class Story {
 		final StringBuilder s = new StringBuilder(this.storyCharLength);
 		int scrambledWordIndexesIndex = 0;
 		int scrambledWordIndex = this.scrambledWordIndexes[scrambledWordIndexesIndex];
+		String word;
 		for(int wordIndex = 0; wordIndex < wordCount; wordIndex++) {
-			String word = this.words[wordIndex];
 			if(scrambledWordIndex == wordIndex) {
 				word = this.scrambledWords[scrambledWordIndex];
 				if(++scrambledWordIndexesIndex >= scrambledWordCount)
 					scrambledWordIndex = -1;
 				else scrambledWordIndex = this.scrambledWordIndexes[scrambledWordIndexesIndex];
-			}
+			} else word = this.words[wordIndex];
 			s.append(wordIndex == wordCount - 1 ? word : word + ' ');
 		}
 		return s.toString();
