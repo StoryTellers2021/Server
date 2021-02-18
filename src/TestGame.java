@@ -21,6 +21,9 @@ class TestGame {
 		assertEquals(0, g.getScore(1));
 		assertEquals(0, g.getScore(2));
 		assertEquals(0, g.getScore(3));
+		
+		g.addSolved(0, 20);
+		assertEquals(20, g.getScore(0));
 	}
 	
 	@Test
