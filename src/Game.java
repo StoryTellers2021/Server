@@ -8,53 +8,51 @@ public class Game {
 	public Game(Student[] students, Story story) {
 		this.studentList = students;
 		this.story = story;
-		this.scoreList = new int[students.size()];
-		this.unScrambled = new int[students.size()];
+		this.scoreList = new int[students.length];
+		this.unScrambled = new int[students.length];
 		
-		this.totalWords = story.getScramledWordIndexes().length;
-		for(int i = 0; i < students.size(); i++) {
+		this.totalWords = story.getScrambledWordIndexes().length;
+		
+		for(int i = 0; i < students.length; i++) {
 			this.scoreList[i] = 0;
 			this.unScrambled[i] = 0;
 		}
 	}
 	
 	public int getScore(int index) throws IndexOutOfBoundsException {
-		if(index < 0 || index >= this.studentList.size()) {
+		if(index < 0 || index >= this.studentList.length) {
 			throw new IndexOutOfBoundsException("getScore: Invalid student index at " + index + "!");
 		}
 		return this.scoreList[index];
 	}
 	
 	public int wordsUnScrambled(int index) throws IndexOutOfBoundsException {
-		if(index < 0 || index >= this.studentList.size()) {
+		if(index < 0 || index >= this.studentList.length) {
 			throw new IndexOutOfBoundsException("wordUnScrambled: Invalid student index at " + index + "!");
 		}
 		return this.unScrambled[index];
 	}
 	
 	public int wordsLeft(int index) throws IndexOutOfBoundsException {
-		if(index < 0 || index >= this.studentList.size()) {
+		if(index < 0 || index >= this.studentList.length) {
 			throw new IndexOutOfBoundsException("wordsLeft: Invalid student index at " + index + "!");
 		}
 		return this.totalWords - this.wordsUnScrambled(index);
 	}
 	
-	public void addScore(int index, int score) throws IndexOutOfBoundsException {
-		if(index < 0 || index >= this.studentList.size()) {
-			throw new IndexOutOfBoundsException("addScore: Invalid student index at " + index + "!");
-		}
-		this.scoreList[index] += score;
-	}
-	
-	public void addSolvedUnscrambled(int index) throws IndexOutOfBoundsException {
-		if(index < 0 || index >= this.studentList.size()) {
+	public void addSolved(int index, int score) throws IndexOutOfBoundsException {
+		if(index < 0 || index >= this.studentList.length) {
 			throw new IndexOutOfBoundsException("addSolvedUnscrambled: Invalid student index at " + index + "!");
 		}
-		this.unScrambled[index] += 1;
+		
+		if(score >= 0) {
+			this.unScrambled[index] += 1;
+			this.scoreList[index] += score;
+		}
 	}
 	
 	public double getPercentSolved(int index) throws IndexOutOfBoundsException {
-		if(index < 0 || index >= this.studentList.size()) {
+		if(index < 0 || index >= this.studentList.length) {
 			throw new IndexOutOfBoundsException("getPercentSolved: Invalid student index at " + index + "!");
 		}
 		return this.unScrambled[index] * 100.0/ this.totalWords;
