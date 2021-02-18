@@ -74,16 +74,18 @@ class TestStory {
 		Story s = new Story(story, index);
 		// s.getUnsolvedStory();
 		
-		
-		assertFalse(s.getUnsolvedStory().equals(story));
+		String unsolvedStory1 = s.getUnsolvedStory();
+		assertFalse(unsolvedStory1.equals(story));
+		System.out.println("Unsolved story 1: " + unsolvedStory1);
 		
 		
 		//Fails when index  does not start from 0 and is not in order
 		 story = "this little piggy went to market";
 		int[] index2 = {3, 1};
 		 s = new Story(story, index2);
-		// s.getUnsolvedStory();
-		assertFalse(s.getUnsolvedStory().equals(story));
+		String unsolvedStory2 = s.getUnsolvedStory();
+		assertFalse(unsolvedStory2.equals(story));
+		System.out.println("Unsolved story 2: " + unsolvedStory2);
 	}
 	
 	//Test getSolvedStory method

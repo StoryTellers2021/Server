@@ -1,6 +1,7 @@
 package story;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class Story {
 	
@@ -31,7 +32,7 @@ public class Story {
 			if(wordIndex < 0 || wordIndex >= wordCount) {
 				throw new IndexOutOfBoundsException("scrambleWordsAt: Invalid word index of " + wordIndex + '!');
 			}
-			scrambledWords[scrambledWordIndexesIndex] = this.scramble(this.words[wordIndex]);
+			scrambledWords[scrambledWordIndexesIndex] = scramble(this.words[wordIndex]);
 		}
 		this.scrambledWordIndexes = scrambledWordIndexes;
 		this.scrambledWords = scrambledWords;
@@ -57,7 +58,7 @@ public class Story {
 		String word;
 		for(int wordIndex = 0; wordIndex < wordCount; wordIndex++) {
 			if(scrambledWordIndex == wordIndex) {
-				word = this.scrambledWords[scrambledWordIndex];
+				word = this.scrambledWords[scrambledWordIndexesIndex];
 				if(++scrambledWordIndexesIndex >= scrambledWordCount)
 					scrambledWordIndex = -1;
 				else scrambledWordIndex = this.scrambledWordIndexes[scrambledWordIndexesIndex];
@@ -81,9 +82,30 @@ public class Story {
 		return this.scrambledWordIndexes;
 	}
 	
-	private String scramble(String word) {
-		// TODO: Add code for scrambling.
-		return word;
+	private static String scramble(String word) {
+		int len = word.length();
+		char[] parse = new char[len];
+		int[] index = new int[len]; 
+		while(true) {
+			String ret = "";
+			word.getChars(0, len, parse,0);
+			Random rand = new Random();
+			for(int i = 0; i<len; i++) {
+				index[i] = -1;
+			}
+			for(int i = 0; i<len; i++) {
+				int random = rand.nextInt(len);
+				while(index[random] != -1 ) {
+					random = rand.nextInt(len);
+				}
+				index[random] = i; 
+			}
+			for(int i = 0; i<len; i++) {
+				ret = ret + parse[index[i]];
+			}
+			if(!(word.equals(ret)))
+				return ret;
+		}
 	}
 
 }
