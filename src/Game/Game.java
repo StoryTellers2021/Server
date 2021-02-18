@@ -1,3 +1,7 @@
+package Game;
+import Story;
+import Student.Student;
+
 public class Game {
 	final int totalWords;
 	private Student[] studentList;
