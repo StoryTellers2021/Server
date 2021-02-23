@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonAutoDetect(creatorVisibility = JsonAutoDetect.Visibility.NONE, fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Story {
 	
-	@JsonProperty("story") public final String solvedStory;
+	private final String solvedStory;
 	private final String[] words;
 	private final int wordCount;
 	private final int storyCharLength;
@@ -65,6 +65,7 @@ public class Story {
 		return this.getSolvedWordBySolvableIndex(solvableWordIndex).equals(solution) ? 1 : 0;
 	}
 	
+	@JsonProperty("unsolvedStory")
 	public String getUnsolvedStory() {
 		final int scrambledWordCount = this.scrambledWordCount;
 		if(scrambledWordCount == 0)
@@ -86,10 +87,12 @@ public class Story {
 		return s.toString();
 	}
 	
+	@JsonProperty("solvedStory")
 	public String getSolvedStory() {
 		return this.solvedStory;
 	}
 	
+	@JsonProperty("solvableWordIndexes")
 	public int[] getScrambledWordIndexes() {
 		return this.scrambledWordIndexes;
 	}
