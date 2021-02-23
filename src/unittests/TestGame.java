@@ -1,6 +1,12 @@
+package unittests;
 import static org.junit.jupiter.api.Assertions.*;
 
+import story.Story;
+import student.Student;
+
 import org.junit.jupiter.api.Test;
+
+import game.Game;
 
 class TestGame {
 

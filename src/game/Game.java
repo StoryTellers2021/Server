@@ -1,6 +1,6 @@
-package Game;
-import Story;
-import Student.Student;
+package game;
+import story.Story;
+import student.Student;
 
 public class Game {
 	final int totalWords;

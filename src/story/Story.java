@@ -3,9 +3,13 @@ package story;
 import java.util.Arrays;
 import java.util.Random;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonAutoDetect(creatorVisibility = JsonAutoDetect.Visibility.NONE, fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Story {
 	
-	private final String solvedStory;
+	@JsonProperty("story") public final String solvedStory;
 	private final String[] words;
 	private final int wordCount;
 	private final int storyCharLength;
