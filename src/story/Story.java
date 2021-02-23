@@ -5,6 +5,7 @@ import java.util.Random;
 
 public class Story {
 	
+	private final String solvedStory;
 	private final String[] words;
 	private final int wordCount;
 	private final int storyCharLength;
@@ -13,6 +14,7 @@ public class Story {
 	private int scrambledWordCount = 0;
 	
 	public Story(final String story) {
+		this.solvedStory = story;
 		this.words = story.split(" ");
 		this.wordCount = words.length;
 		this.storyCharLength = story.length();
@@ -81,13 +83,7 @@ public class Story {
 	}
 	
 	public String getSolvedStory() {
-		final StringBuilder s = new StringBuilder(this.storyCharLength);
-		final int wordCount = this.wordCount;
-		for(int wordIndex = 0; wordIndex < wordCount; wordIndex++) {
-			final String word = this.words[wordIndex];
-			s.append(wordIndex == wordCount - 1 ? word : word + ' ');
-		}
-		return s.toString();
+		return this.solvedStory;
 	}
 	
 	public int[] getScrambledWordIndexes() {
@@ -119,5 +115,5 @@ public class Story {
 				return ret;
 		}
 	}
-
+	
 }
