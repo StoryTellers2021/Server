@@ -9,7 +9,7 @@ class TestStory {
 	@Test
 	public void testScrambleWordsAt() {
 		String story = "this little piggy went to market";
-		int[] index = {0,1,2,3,4,5};
+		int[] index = {0,1,2};
 		
 		
 		
@@ -20,7 +20,6 @@ class TestStory {
 		String answer = s.getUnsolvedStory();
 		
 		String word = answer.substring(0,4);
-		//System.out.print(word);
 		
 		assertFalse(word.equals("this"));
 		
@@ -34,7 +33,7 @@ class TestStory {
 		assertFalse(word.equals("piggy"));
 		
 		word = answer.substring(18,22);
-	
+
 		assertTrue(word.equals("went"));
 		
 		word = answer.substring(23,25);
@@ -88,12 +87,42 @@ class TestStory {
 	@Test
 	public void testGetSolvedStory() {
 		String story = "this little piggy went to market";
-		int[] index = {0,1,2,3,4,5};
+		int[] index = {1,2,4,5};
 		Story s = new Story(story, index);
 	
-		System.out.print(s.getSolvedStory());
+	//	System.out.print(s.getSolvedStory());
 		
 		assertTrue(s.getSolvedStory().equals(story));
+	}
+	
+	@Test
+	public void testGetUnsolvedWordBySolvableIndex() {
+		String story = "this little piggy went to market";
+		int[] index = {1,2,4,5};
+
+		Story s = new Story(story, index);
+		
+		
+		
+		assertFalse(s.getUnsolvedWordBySolvableIndex(0).equals("little"));
+		assertFalse(s.getUnsolvedWordBySolvableIndex(1).equals("piggy"));
+		assertFalse(s.getUnsolvedWordBySolvableIndex(3).equals("market"));
+		
+		
+	}
+	
+	@Test
+	public void testgGetSolvedWordBySolvableIndex() {
+		String story = "this little piggy went to market";
+		int[] index = {1,2,4,5};
+
+		Story s = new Story(story, index);
+		
+	
+		
+		assertTrue(s.getSolvedWordBySolvableIndex(0).equals("little"));
+		assertTrue(s.getSolvedWordBySolvableIndex(1).equals("piggy"));
+		assertTrue(s.getSolvedWordBySolvableIndex(3).equals("market"));
 	}
 	
 }
