@@ -1,5 +1,4 @@
 package game;
-import story.Story;
 import student.Student;
 
 public class Game {
