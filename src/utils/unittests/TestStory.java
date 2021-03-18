@@ -1,6 +1,7 @@
-package unittests;
+package utils.unittests;
 
-import story.*;
+import game.Story;
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ class TestStory {
 		
 		
 		
-		Story s = new Story(story, index);
+		Story s = new Story(story);
 		s.scrambleWordsAt(index);
 		
 
