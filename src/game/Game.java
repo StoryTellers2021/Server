@@ -1,11 +1,14 @@
-package game;
-import student.Student;
+package Game;
+import Student.Student;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Game {
 	final int totalWords;
 	private Student[] studentList;
 	private int[] scoreList;
 	private int[] unScrambled;
+	private ArrayList[] scrambled_index;
 	private Story story;
 	
 	public Game(Student[] students, Story story) {
@@ -19,6 +22,7 @@ public class Game {
 		for(int i = 0; i < students.length; i++) {
 			this.scoreList[i] = 0;
 			this.unScrambled[i] = 0;
+			this.scrambled_index[i] = (ArrayList) Arrays.asList(this.story.getScrambledWordIndexes());
 		}
 	}
 	
@@ -43,7 +47,7 @@ public class Game {
 		return this.totalWords - this.wordsUnScrambled(index);
 	}
 	
-	public void addSolved(int index, int score) throws IndexOutOfBoundsException {
+	public void addSolved(int index, int s_index, int score) throws IndexOutOfBoundsException {
 		if(index < 0 || index >= this.studentList.length) {
 			throw new IndexOutOfBoundsException("addSolvedUnscrambled: Invalid student index at " + index + "!");
 		}
@@ -51,6 +55,7 @@ public class Game {
 		if(score >= 0) {
 			this.unScrambled[index] += 1;
 			this.scoreList[index] += score;
+			this.scrambled_index[index].remove(s_index);
 		}
 	}
 	
@@ -60,4 +65,17 @@ public class Game {
 		}
 		return this.unScrambled[index] * 100.0/ this.totalWords;
 	}
+	
+	public int[] getScrambledIndexLeft(int index) throws IndexOutOfBoundsException {
+		if(index < 0 || index >= this.studentList.length) {
+			throw new IndexOutOfBoundsException("getPercentSolved: Invalid student index at " + index + "!");
+		}
+		int[] temp = new int[this.scrambled_index[index].size()];
+		for(int i = 0; i < this.scrambled_index[index].size(); i++) {
+			temp[i] = (int) this.scrambled_index[index].get(i);
+		}
+		
+		return temp;
+	}
+		
 }
