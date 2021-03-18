@@ -1,11 +1,15 @@
 package student;
 public class Student {
 
-	private String firstName;
-	private String lastName;
+	private final String firstName;
+	private final String lastName;
+	private final String schoolStudentId;
+	private int storyIndex;
 	
-	public Student(String fname, String lname) {
-		this.firstName = fname;
-		this.lastName = lname;
+	public Student(final String firstName, final String lastName, final String schoolStudentId) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.schoolStudentId = schoolStudentId;
+		this.storyIndex = 0;
 	}
 }

@@ -12,10 +12,10 @@ class TestGame {
 
 	@Test
 	public void testgetScore() {
-		Student john = new Student("John", "lennon");
-		Student paul = new Student("Paul", "Mccartney");
-		Student george = new Student("George", "Harrison");
-		Student ringo = new Student("Ringo", "Starr");
+		Student john = new Student("John", "Lennon", "JL0746");
+		Student paul = new Student("Paul", "Mccartney", "PM0923");
+		Student george = new Student("George", "Harrison", "GH0233");
+		Student ringo = new Student("Ringo", "Starr", "RS0873");
 		
 		Student[] students = {john, paul, george, ringo};
 		
@@ -34,10 +34,10 @@ class TestGame {
 	
 	@Test
 	public void testaddSolved() {
-		Student john = new Student("John", "lennon");
-		Student paul = new Student("Paul", "Mccartney");
-		Student george = new Student("George", "Harrison");
-		Student ringo = new Student("Ringo", "Starr");
+		Student john = new Student("John", "Lennon", "JL0746");
+		Student paul = new Student("Paul", "Mccartney", "PM0923");
+		Student george = new Student("George", "Harrison", "GH0233");
+		Student ringo = new Student("Ringo", "Starr", "RS0873");
 		
 		Student[] students = {john, paul, george, ringo};
 		
@@ -68,10 +68,10 @@ class TestGame {
 	
 	@Test
 	public void testWordsLeft() {
-		Student john = new Student("John", "lennon");
-		Student paul = new Student("Paul", "Mccartney");
-		Student george = new Student("George", "Harrison");
-		Student ringo = new Student("Ringo", "Starr");
+		Student john = new Student("John", "Lennon", "JL0746");
+		Student paul = new Student("Paul", "Mccartney", "PM0923");
+		Student george = new Student("George", "Harrison", "GH0233");
+		Student ringo = new Student("Ringo", "Starr", "RS0873");
 		
 		Student[] students = {john, paul, george, ringo};
 		
@@ -93,10 +93,10 @@ class TestGame {
 	
 	@Test
 	public void testWordsUnscrambled() {
-		Student john = new Student("John", "lennon");
-		Student paul = new Student("Paul", "Mccartney");
-		Student george = new Student("George", "Harrison");
-		Student ringo = new Student("Ringo", "Starr");
+		Student john = new Student("John", "Lennon", "JL0746");
+		Student paul = new Student("Paul", "Mccartney", "PM0923");
+		Student george = new Student("George", "Harrison", "GH0233");
+		Student ringo = new Student("Ringo", "Starr", "RS0873");
 		
 		Student[] students = {john, paul, george, ringo};
 		
