@@ -13,11 +13,7 @@ public class Stories {
         allStories = stories;
     }
 
-    public static Story getStoryAtIndex(final int index) throws java.lang.IndexOutOfBoundsException {
-        if(isValidStoryIndex(index)) {
-            throw new java.lang.IndexOutOfBoundsException("getStoryAtIndex: Index " + index + " is invalid!");
-        } else {
-            return allStories.get(index);
-        }
+    public static Story getStoryAtIndex(final int index) {
+        return allStories.get(index);
     }
 }

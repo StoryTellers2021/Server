@@ -16,7 +16,7 @@ class TestStory {
 		
 		
 		
-		Story s = new Story(story);
+		Story s = new Story(0, story);
 		s.scrambleWordsAt(index);
 		
 
@@ -57,7 +57,7 @@ class TestStory {
 	public void testScoreSolution() {
 		String story = "this little piggy went to market";
 		int[] index = {0,1,2};
-		Story s = new Story(story, index);
+		Story s = new Story(0, story, index);
 
 		assertTrue(s.scoreSolution("this", 0)==1);
 		assertFalse(s.scoreSolution("shit", 0)==1);
@@ -72,7 +72,7 @@ class TestStory {
 	public void testGetUnsolvedStory() {
 		String story = "this little piggy went to market";
 		int[] index = {0,1,2,3,4,5};
-		Story s = new Story(story, index);
+		Story s = new Story(0, story, index);
 		// s.getUnsolvedStory();
 		
 		String unsolvedStory1 = s.getUnsolvedStory();
@@ -83,7 +83,7 @@ class TestStory {
 		//Fails when index  does not start from 0 and is not in order
 		 story = "this little piggy went to market";
 		int[] index2 = {3, 1};
-		 s = new Story(story, index2);
+		 s = new Story(0, story, index2);
 		String unsolvedStory2 = s.getUnsolvedStory();
 		assertFalse(unsolvedStory2.equals(story));
 		System.out.println("Unsolved story 2: " + unsolvedStory2);
@@ -94,7 +94,7 @@ class TestStory {
 	public void testGetSolvedStory() {
 		String story = "this little piggy went to market";
 		int[] index = {0,1,2,3,4,5};
-		Story s = new Story(story, index);
+		Story s = new Story(0, story, index);
 	
 		System.out.print(s.getSolvedStory());
 		

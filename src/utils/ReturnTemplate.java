@@ -8,7 +8,7 @@ import java.util.List;
 public class ReturnTemplate<T> {
 
     interface AccountServerReturnProcessor<T> {
-        T processRequest(final List<String> problems);
+        T processRequest();
     }
 
     private final List<String> problems;
@@ -18,10 +18,12 @@ public class ReturnTemplate<T> {
         this.problems = new LinkedList<>();
     }
 
-    ReturnTemplate<T> validateAndProcessRequest(final InputValidator inputValidator, final AccountServerReturnProcessor<T> processor) {
-        if (inputValidator.validate(this.problems))
-                this.result = processor.processRequest(this.problems);
-        else this.problems.add("OPERATION_NOT_SUPPORTED");
+    ReturnTemplate<T> validateAndProcessRequest(final InputValidator[] inputValidators, final AccountServerReturnProcessor<T> processor) {
+        boolean success = true;
+        for(final InputValidator inputValidator : inputValidators)
+            success = inputValidator.validate(this.problems) && success;
+        if (success)
+            this.result = processor.processRequest();
         return this;
     }
 
