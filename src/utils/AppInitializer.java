@@ -9,8 +9,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 public class AppInitializer implements WebApplicationInitializer {
 	public void onStartup(ServletContext servletContext) throws ServletException {  
         final AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
-        ctx.register(ApiConfig.class);
-        ctx.register(DatabaseConfig.class);
+        ctx.register(SpringConfig.class);
         ctx.setServletContext(servletContext);
         final Dynamic dynamic = servletContext.addServlet("dispatcher", new DispatcherServlet(ctx));
         dynamic.addMapping("/api/v1/*");

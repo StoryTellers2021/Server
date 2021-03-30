@@ -5,14 +5,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.sql.DataSource;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 @Configuration
-@ComponentScan(basePackageClasses = DatabaseQueries.class)
-public class DatabaseConfig {
+@ComponentScan("utils")
+@EnableWebMvc
+public class SpringConfig {
     public DataSource dataSource() throws URISyntaxException {
         // https://devcenter.heroku.com/articles/connecting-to-relational-databases-on-heroku-with-java#using-the-database_url-in-spring-with-java-configuration
         // env var DATABASE_URL must be configured for this to work.

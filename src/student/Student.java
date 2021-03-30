@@ -3,7 +3,6 @@ package student;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import game.Game;
-import game.Stories;
 import game.Story;
 import utils.DatabaseStaticHandler;
 
@@ -15,6 +14,7 @@ public class Student {
 
 	public final String firstName;
 	public final String lastName;
+	@JsonProperty("studentId")
 	public final String schoolStudentId;
 	public final int teacherId;
 	private int storyIndex;

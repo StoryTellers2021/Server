@@ -17,4 +17,8 @@ public class Teacher {
         this.game = DatabaseStaticHandler.getGame(gameId);
     }
 
+    public Game getGame() {
+        return this.game;
+    }
+
 }
