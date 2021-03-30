@@ -1,8 +1,6 @@
 package utils;
 
-import game.Game;
 import game.Story;
-import student.Student;
 
 public class DatabaseStaticHandler {
 
@@ -14,14 +12,6 @@ public class DatabaseStaticHandler {
 
     public static final Story getStory(final Integer storyId) {
         return querier.getStory(storyId);
-    }
-
-    public static final Game getGame(final int gameId) {
-        return querier.getGame(gameId);
-    }
-
-    public static final Student getStudent(final String studentId) {
-        return querier.getStudent(studentId);
     }
 
 }

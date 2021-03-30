@@ -20,11 +20,20 @@ public class ApiController {
         this.querier = querier;
     }
 
-
     @RequestMapping(value = "student", method = RequestMethod.POST)
     public @ResponseBody ReturnTemplate<Student> getStudent(@RequestParam("student-id") final String studentId) {
         return new ReturnTemplate<Student>().validateAndProcessRequest(new InputValidator[]{new InputValidator(studentId)}, () -> this.querier.getStudent(studentId));
     }
+
+    @RequestMapping(value = "student", method = RequestMethod.POST, params = {"student-id", "word-index", "word-solution"})
+    public @ResponseBody ReturnTemplate<Student> getSolution(@RequestParam("student-id") final String studentId, @RequestParam("word-index") final int solvableWordIndex, @RequestParam("word-solution") final String studentSolution) {
+        final Student student = this.querier.getStudent(studentId);
+        return new ReturnTemplate<Student>().validateAndProcessRequest(new InputValidator[]{new SolutionInputValidator(studentSolution, solvableWordIndex, student)}, () -> {
+            this.querier.updateStudentProgress(student);
+            return student;
+        });
+    }
+
 
     @RequestMapping(value = "teacher", method = RequestMethod.POST)
     public @ResponseBody ReturnTemplate<Teacher> getTeacher(@RequestParam("teacher-code") final String teacherCode) {
@@ -40,6 +49,5 @@ public class ApiController {
     public @ResponseBody ReturnTemplate<Game> getTeacherGame(@RequestParam("teacher-code") final String teacherCode) {
         return new ReturnTemplate<Game>().validateAndProcessRequest(new InputValidator[]{new InputValidator(teacherCode)}, () -> this.querier.getGameByTeacherCode(teacherCode));
     }
-
 
 }

@@ -4,26 +4,23 @@ import java.util.List;
 
 public class InputValidator {
 
-    final String input;
+    private final String value;
 
-    InputValidator(final String input) {
-        this.input = input;
+    public InputValidator(final String value) {
+        this.value = value;
     }
 
     public boolean validate(final List<String> problems) {
         if (this.isBlank()) {
             problems.add(this.getBlankInputProblem());
-            return false;
-        }
-        if (this.isInvalid()) {
+        } else if (this.isInvalid()) {
             problems.add(this.getInvalidInputProblem());
-            return false;
-        }
-        return true;
+        } else return true;
+        return false;
     }
 
     public boolean isBlank() {
-        return this.input.length() == 0;
+        return this.getValue() == null || this.getValue().length() == 0;
     }
 
     public boolean isInvalid() {
@@ -36,5 +33,9 @@ public class InputValidator {
 
     public String getInvalidInputProblem() {
         return "INPUT_INVALID";
+    }
+
+    public String getValue() {
+        return this.value;
     }
 }

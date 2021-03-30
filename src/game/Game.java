@@ -38,4 +38,29 @@ public class Game {
 		return this.ended;
 	}
 
+	public boolean isLastStory(final int studentStoryIndex) {
+		return studentStoryIndex >= this.stories.size() - 1;
+	}
+
+	public boolean storyIsFinished(final int studentStoryIndex, final int studentSolvedWordCount) {
+		return studentSolvedWordCount >= this.getStory(studentStoryIndex).getScrambledWordIndexes().length;
+	}
+
+	public boolean studentIsFinished(final Student student) {
+		return this.isLastStory(student.getStoryIndex()) && this.storyIsFinished(student.getStoryIndex(), student.getSolvedWordCount());
+	}
+
+	public boolean scoreSolution(final Student student, final String studentSolution, final int solvableWordIndex) throws IndexOutOfBoundsException {
+		final int studentStoryIndex = student.getStoryIndex();
+		final int scoreAdd = this.getStory(studentStoryIndex).scoreSolution(studentSolution, solvableWordIndex);
+		if(scoreAdd > 0){
+			student.addToScore(scoreAdd);
+			student.addSolvedWordIndex(solvableWordIndex);
+			if(this.storyIsFinished(studentStoryIndex, student.getSolvedWordCount()) && !this.isLastStory(studentStoryIndex))
+				student.advanceStory();
+			return true;
+		}
+		return false;
+	}
+
 }

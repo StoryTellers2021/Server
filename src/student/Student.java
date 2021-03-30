@@ -6,50 +6,39 @@ import game.Game;
 import game.Story;
 import utils.DatabaseStaticHandler;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Student {
 
+	public final int databaseStudentId;
+	@JsonProperty("firstName")
 	public final String firstName;
+	@JsonProperty("lastName")
 	public final String lastName;
 	@JsonProperty("studentId")
 	public final String schoolStudentId;
 	public final int teacherId;
 	private int storyIndex;
-	private List<Integer> solvedWords;
+	@JsonProperty("solvedWords")
+	private final List<Integer> solvedWords;
 	private int score;
 	private final Game game;
+	private boolean finished;
 
-	public Student(final String firstName, final String lastName, final String schoolStudentId, final int teacherId, final int storyIndex, final Integer[] solvedWords, final int score, final int gameId) {
+	public Student(final int databaseStudentId, final String firstName, final String lastName, final String schoolStudentId, final int teacherId, final int storyIndex, final Integer[] solvedWords, final int score, final Game game) {
+		this.databaseStudentId = databaseStudentId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.schoolStudentId = schoolStudentId;
 		this.teacherId = teacherId;
 		this.storyIndex = storyIndex;
-		this.solvedWords = Arrays.asList(solvedWords);
+		this.solvedWords = new ArrayList<>(Arrays.asList(solvedWords));
 		this.score = score;
-		this.game = DatabaseStaticHandler.getGame(gameId);
-	}
-
-	@JsonProperty("firstName")
-	public String getFirstName() {
-		return this.firstName;
-	}
-
-	@JsonProperty("lastName")
-	public String getLastName() {
-		return this.lastName;
-	}
-
-	public int getTeacherId() {
-		return this.teacherId;
-	}
-
-	@JsonProperty("solvedWords")
-	public List<Integer> getSolvedWords() {
-		return this.solvedWords;
+		this.game = game;
+		this.finished = game.studentIsFinished(this);
 	}
 
 	@JsonProperty("score")
@@ -64,11 +53,50 @@ public class Student {
 
 	@JsonProperty("gameEnded")
 	public boolean gameEnded() {
-		return this.game.hasEnded();
+		return this.game.hasEnded() || this.finished;
+	}
+
+	@JsonProperty("storyIndex")
+	public int getStoryIndex() {
+		return this.storyIndex;
 	}
 
 	@JsonProperty("story")
-	public Story getCurrentStory() {
+	public Story getStory() {
 		return this.game.getStory(this.storyIndex);
 	}
+
+	public Integer[] getSolvedWords() {
+		return this.solvedWords.toArray(new Integer[this.solvedWords.size()]);
+	}
+
+	public int getSolvedWordCount() {
+		return this.solvedWords.size();
+	}
+
+	public boolean hasSolvedWord(final int solvableWordIndex) {
+		return this.solvedWords.contains(solvableWordIndex);
+	}
+
+	public void addSolvedWordIndex(final Integer solvedWordIndex) {
+		this.solvedWords.add(solvedWordIndex);
+	}
+
+	public void advanceStory() {
+		this.storyIndex++;
+		this.solvedWords.clear();
+	}
+
+	public boolean scoreSolution(final String studentSolution, final int solvableWordIndex) throws IndexOutOfBoundsException {
+		if(this.game.scoreSolution(this, studentSolution, solvableWordIndex)){
+			this.finished = this.game.studentIsFinished(this);
+			return true;
+		}
+		return false;
+	}
+
+	public void addToScore(final int score) {
+		this.score += score;
+	}
+
 }
