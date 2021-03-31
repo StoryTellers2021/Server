@@ -105,4 +105,21 @@ public class DatabaseQueries {
             return ps.execute();
         });
     }
+
+    public Story addStory(final Game game, final Story story) {
+        final int[] scrambledIndex = story.getScrambledWordIndexes();
+        final int scrambledWordCount = scrambledIndex.length;
+        final StringBuilder indexes = new StringBuilder(scrambledWordCount * 2);
+        for(int i=0; i< scrambledIndex.length; i++) {
+            indexes.append(scrambledIndex[i] + (i < scrambledWordCount - 1 ? "," : ""));
+        }
+        story.setId(this.jbdcTemplate.queryForObject("INSERT INTO  stories (story_text, scrambled_words) VALUES (?, ?) RETURNING id", new Object[]{story.getSolvedStory(), indexes.toString()}, Integer.class));
+        game.addStory(story);
+        this.jbdcTemplate.execute("UPDATE game SET story_ids = ? WHERE id = ?", (final PreparedStatement ps) -> {
+            ps.setArray(1, ps.getConnection().createArrayOf("integer", game.getStoryIds()));
+            ps.setInt(2, game.gameId);
+            return ps.execute();
+        });
+        return story;
+    }
 }

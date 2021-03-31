@@ -50,4 +50,9 @@ public class ApiController {
         return new ReturnTemplate<Game>().validateAndProcessRequest(new InputValidator[]{new InputValidator(teacherCode)}, () -> this.querier.getGameByTeacherCode(teacherCode));
     }
 
+    @RequestMapping(value = "teacher/add-story", method = RequestMethod.POST)
+    public @ResponseBody ReturnTemplate<Story> addStory(@RequestParam("teacher-code") final String teacherCode, @RequestParam("story") final String storyText, @RequestParam("scrambled-words") final String scrambledWordIndexes) {
+        return new ReturnTemplate<Story>().validateAndProcessRequest(new InputValidator[]{new InputValidator(teacherCode)}, () -> this.querier.addStory(this.querier.getTeacherByCode(teacherCode).getGame(), new Story(0, storyText, scrambledWordIndexes)));
+    }
+
 }

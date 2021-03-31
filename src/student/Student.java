@@ -26,7 +26,6 @@ public class Student {
 	private final List<Integer> solvedWords;
 	private int score;
 	private final Game game;
-	private boolean finished;
 
 	public Student(final int databaseStudentId, final String firstName, final String lastName, final String schoolStudentId, final int teacherId, final int storyIndex, final Integer[] solvedWords, final int score, final Game game) {
 		this.databaseStudentId = databaseStudentId;
@@ -38,7 +37,6 @@ public class Student {
 		this.solvedWords = new ArrayList<>(Arrays.asList(solvedWords));
 		this.score = score;
 		this.game = game;
-		this.finished = game.studentIsFinished(this);
 	}
 
 	@JsonProperty("score")
@@ -53,7 +51,7 @@ public class Student {
 
 	@JsonProperty("gameEnded")
 	public boolean gameEnded() {
-		return this.game.hasEnded() || this.finished;
+		return this.game.hasEnded() || this.game.studentIsFinished(this);
 	}
 
 	@JsonProperty("storyIndex")
@@ -88,11 +86,7 @@ public class Student {
 	}
 
 	public boolean scoreSolution(final String studentSolution, final int solvableWordIndex) throws IndexOutOfBoundsException {
-		if(this.game.scoreSolution(this, studentSolution, solvableWordIndex)){
-			this.finished = this.game.studentIsFinished(this);
-			return true;
-		}
-		return false;
+		return this.game.scoreSolution(this, studentSolution, solvableWordIndex);
 	}
 
 	public void addToScore(final int score) {

@@ -20,7 +20,7 @@ public class Game {
 
 	public Game(final int gameId, final Integer[] storyIds, final boolean started, final boolean ended) {
 		this.gameId = gameId;
-		this.storyIds = Arrays.asList(storyIds);
+		this.storyIds = new ArrayList<>(Arrays.asList(storyIds));
 		this.stories = new ArrayList<>(storyIds.length);
 		for(final Integer storyId : storyIds)
 			this.stories.add(DatabaseStaticHandler.getStory(storyId));
@@ -61,6 +61,15 @@ public class Game {
 			return true;
 		}
 		return false;
+	}
+
+	public void addStory(final Story story) {
+		this.storyIds.add(story.getId());
+		this.stories.add(story);
+	}
+
+	public Integer[] getStoryIds() {
+		return this.storyIds.toArray(new Integer[this.storyIds.size()]);
 	}
 
 }

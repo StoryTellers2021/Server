@@ -17,11 +17,9 @@ public class SolutionInputValidator extends InputValidator {
 
     @Override
     public boolean validate(final List<String> problems) {
-        if (this.student == null) {
+        if (this.student == null)
             problems.add("INVALID_STUDENT_ID");
-            return false;
-        }
-        if (super.validate(problems)) {
+        else if (super.validate(problems)) {
             if (this.student.hasSolvedWord(this.solvableWordIndex))
                 problems.add("ALREADY_SOLVED_WORD");
             else {

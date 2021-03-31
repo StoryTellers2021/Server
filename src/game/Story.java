@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonAutoDetect(creatorVisibility = JsonAutoDetect.Visibility.NONE, fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Story {
 
-	private final int id;
+	private int id;
 	private final String solvedStory;
 	private final String[] words;
 	private final int wordCount;
@@ -39,6 +39,14 @@ public class Story {
 		for(int solvableWordIndex = 0; solvableWordIndex < scrambledWordCount; solvableWordIndex++)
 			scrambledWordIndexes[solvableWordIndex] = Integer.parseInt(scrambledWordIndexesAsStringSplit[solvableWordIndex]);
 		this.scrambleWordsAt(scrambledWordIndexes);
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(final int id) {
+		this.id = id;
 	}
 	
 	public void scrambleWordsAt(final int[] scrambledWordIndexes) throws IndexOutOfBoundsException {
