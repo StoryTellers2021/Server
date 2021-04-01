@@ -8,7 +8,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonAutoDetect(creatorVisibility = JsonAutoDetect.Visibility.NONE, fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Story {
-	
+
+	private int id;
 	private final String solvedStory;
 	private final String[] words;
 	private final int wordCount;
@@ -17,26 +18,35 @@ public class Story {
 	private String[] scrambledWords = new String[0];
 	private int scrambledWordCount = 0;
 	
-	public Story(final String story) {
+	public Story(final int id, final String story) {
+		this.id = id;
 		this.solvedStory = story;
 		this.words = story.split(" ");
 		this.wordCount = words.length;
 		this.storyCharLength = story.length();
 	}
 	
-	public Story(final String story, final int[] scrambledWordIndexes) throws IndexOutOfBoundsException {
-		this(story);
+	public Story(final int id, final String story, final int[] scrambledWordIndexes) throws IndexOutOfBoundsException {
+		this(id, story);
 		this.scrambleWordsAt(scrambledWordIndexes);
 	}
 
-	public Story(final String story, final String scrambledWordIndexesAsString) {
-		this(story);
+	public Story(final int id, final String story, final String scrambledWordIndexesAsString) {
+		this(id, story);
 		final String[] scrambledWordIndexesAsStringSplit = scrambledWordIndexesAsString.split(",");
 		final int scrambledWordCount = scrambledWordIndexesAsStringSplit.length;
 		int[] scrambledWordIndexes = new int[scrambledWordCount];
 		for(int solvableWordIndex = 0; solvableWordIndex < scrambledWordCount; solvableWordIndex++)
 			scrambledWordIndexes[solvableWordIndex] = Integer.parseInt(scrambledWordIndexesAsStringSplit[solvableWordIndex]);
 		this.scrambleWordsAt(scrambledWordIndexes);
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(final int id) {
+		this.id = id;
 	}
 	
 	public void scrambleWordsAt(final int[] scrambledWordIndexes) throws IndexOutOfBoundsException {
