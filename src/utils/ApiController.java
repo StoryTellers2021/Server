@@ -46,7 +46,7 @@ public class ApiController {
     }
 
     @RequestMapping(value = "teacher/add-student", method = RequestMethod.POST)
-    public @ResponseBody ReturnTemplate<Student> getTeacherStudents(@RequestParam("teacher-code") final String teacherCode, @RequestParam("first-name") final String firstName, @RequestParam("last-name") final String lastName, @RequestParam("student-id") final String schoolStudentId) {
+    public @ResponseBody ReturnTemplate<Student> teacherAddStudent(@RequestParam("teacher-code") final String teacherCode, @RequestParam("first-name") final String firstName, @RequestParam("last-name") final String lastName, @RequestParam("student-id") final String schoolStudentId) {
         final Teacher teacher = this.querier.getTeacherByCode(teacherCode);
         return new ReturnTemplate<Student>().validateAndProcessRequest(new InputValidator[]{new InputValidator(teacherCode)},
                 () -> this.querier.studentExists(schoolStudentId) ? null : this.querier.addStudent(new Student(0, firstName, lastName, schoolStudentId, teacher.teacherId, 0, new Integer[0], 0, teacher.getGame())));
@@ -55,6 +55,16 @@ public class ApiController {
     @RequestMapping(value = "teacher/game", method = RequestMethod.POST)
     public @ResponseBody ReturnTemplate<Game> getTeacherGame(@RequestParam("teacher-code") final String teacherCode) {
         return new ReturnTemplate<Game>().validateAndProcessRequest(new InputValidator[]{new InputValidator(teacherCode)}, () -> this.querier.getGameByTeacherCode(teacherCode));
+    }
+
+    @RequestMapping(value = "teacher/game/start", method = RequestMethod.POST)
+    public @ResponseBody ReturnTemplate<Game> startTeacherGame(@RequestParam("teacher-code") final String teacherCode) {
+        return new ReturnTemplate<Game>().validateAndProcessRequest(new InputValidator[]{new InputValidator(teacherCode)}, () -> this.querier.updateGameStatus(this.querier.getGameByTeacherCode(teacherCode).start()));
+    }
+
+    @RequestMapping(value = "teacher/game/end", method = RequestMethod.POST)
+    public @ResponseBody ReturnTemplate<Game> endTeacherGame(@RequestParam("teacher-code") final String teacherCode) {
+        return new ReturnTemplate<Game>().validateAndProcessRequest(new InputValidator[]{new InputValidator(teacherCode)}, () -> this.querier.updateGameStatus(this.querier.getGameByTeacherCode(teacherCode).end()));
     }
 
     @RequestMapping(value = "teacher/add-story", method = RequestMethod.POST)

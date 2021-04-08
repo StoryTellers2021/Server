@@ -139,4 +139,14 @@ public class DatabaseQueries {
         this.studentCache.put(student.schoolStudentId, student);
         return student;
     }
+
+    public Game updateGameStatus(final Game game) {
+        if(game != null)
+            this.jbdcTemplate.execute("UPDATE game SET started = ?, ended = ?", (final PreparedStatement ps) -> {
+                ps.setBoolean(1, game.hasStarted());
+                ps.setBoolean(2, game.hasEnded());
+                return ps.execute();
+            });
+        return game;
+    }
 }

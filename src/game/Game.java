@@ -37,6 +37,21 @@ public class Game {
 	public boolean hasEnded() {
 		return this.ended;
 	}
+	public boolean isInProgress() {
+		return this.hasStarted() && !this.hasEnded();
+	}
+
+	public Game start() {
+		this.started = true;
+		this.ended = false;
+		return this;
+	}
+	public Game end() {
+		if(!this.started)
+			return null;
+		this.ended = true;
+		return this;
+	}
 
 	public boolean isLastStory(final int studentStoryIndex) {
 		return studentStoryIndex >= this.stories.size() - 1;

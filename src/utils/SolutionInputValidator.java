@@ -1,5 +1,6 @@
 package utils;
 
+import game.Game;
 import student.Student;
 
 import java.util.List;
@@ -17,8 +18,13 @@ public class SolutionInputValidator extends InputValidator {
 
     @Override
     public boolean validate(final List<String> problems) {
-        if (this.student == null)
+        if (this.student == null) {
             problems.add("INVALID_STUDENT_ID");
+            return false;
+        }
+        final Game game = this.student.getGame();
+        if(!game.isInProgress())
+            problems.add(game.hasStarted() ? "GAME_OVER" : "GAME_NOT_STARTED");
         else if (super.validate(problems)) {
             if (this.student.hasSolvedWord(this.solvableWordIndex))
                 problems.add("ALREADY_SOLVED_WORD");
