@@ -13,7 +13,7 @@ import java.util.List;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.NONE, getterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Student {
 
-	public final int databaseStudentId;
+	private int databaseStudentId;
 	@JsonProperty("firstName")
 	public final String firstName;
 	@JsonProperty("lastName")
@@ -37,6 +37,14 @@ public class Student {
 		this.solvedWords = new ArrayList<>(Arrays.asList(solvedWords));
 		this.score = score;
 		this.game = game;
+	}
+
+	public int getDatabaseStudentId() {
+		return this.databaseStudentId;
+	}
+
+	public void setDatabaseStudentId(final int databaseStudentId) {
+		this.databaseStudentId = databaseStudentId;
 	}
 
 	@JsonProperty("score")
@@ -91,6 +99,10 @@ public class Student {
 
 	public void addToScore(final int score) {
 		this.score += score;
+	}
+
+	public Game getGame() {
+		return this.game;
 	}
 
 }

@@ -101,7 +101,7 @@ public class DatabaseQueries {
             ps.setInt(1, student.getStoryIndex());
             ps.setArray(2, ps.getConnection().createArrayOf("integer", student.getSolvedWords()));
             ps.setInt(3, student.getScore());
-            ps.setInt(4, student.databaseStudentId);
+            ps.setInt(4, student.getDatabaseStudentId());
             return ps.execute();
         });
     }
@@ -121,5 +121,22 @@ public class DatabaseQueries {
             return ps.execute();
         });
         return story;
+    }
+
+    public Student addStudent(final Student student) {
+        this.jbdcTemplate.execute("INSERT INTO student (first_name, last_name, school_student_id, teacher_id, story_index, completed_words, score, game_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (final PreparedStatement ps) -> {
+            ps.setString(1, student.firstName);
+            ps.setString(2, student.lastName);
+            ps.setString(3, student.schoolStudentId);
+            ps.setInt(4, student.teacherId);
+            ps.setInt(5, student.getStoryIndex());
+            ps.setArray(6, ps.getConnection().createArrayOf("integer", student.getSolvedWords()));
+            ps.setInt(7, student.getScore());
+            ps.setInt(8, student.getGame().gameId);
+            return ps.execute();
+        });
+        student.setDatabaseStudentId(this.jbdcTemplate.queryForObject("SELECT lastval()", Integer.class));
+        this.studentCache.put(student.schoolStudentId, student);
+        return student;
     }
 }
