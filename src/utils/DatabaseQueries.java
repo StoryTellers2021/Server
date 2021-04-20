@@ -149,4 +149,17 @@ public class DatabaseQueries {
             });
         return game;
     }
+
+    public Game resetGame(final Game game) {
+        this.updateGameStatus(game);
+        this.jbdcTemplate.execute("UPDATE student SET story_index = ?, completed_words = ?, score = ? WHERE game_id = ?", (final PreparedStatement ps) -> {
+            ps.setInt(1, 0);
+            ps.setArray(2, ps.getConnection().createArrayOf("integer", new Integer[0]));
+            ps.setInt(3, 0);
+            ps.setInt(4, game.gameId);
+            return ps.execute();
+        });
+        this.studentCache.clear();
+        return game;
+    }
 }

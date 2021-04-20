@@ -28,7 +28,7 @@ public class Game {
 	}
 
 	public Story getStory(final int storyIndex) {
-		return this.started ? this.stories.get(storyIndex) : null;
+		return this.stories.get(storyIndex);
 	}
 
 	public boolean hasStarted() {
@@ -50,6 +50,11 @@ public class Game {
 		if(!this.started)
 			return null;
 		this.ended = true;
+		return this;
+	}
+
+	public Game reset() {
+		this.started = this.ended = false;
 		return this;
 	}
 

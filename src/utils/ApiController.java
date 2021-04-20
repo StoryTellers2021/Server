@@ -67,9 +67,25 @@ public class ApiController {
         return new ReturnTemplate<Game>().validateAndProcessRequest(new InputValidator[]{new InputValidator(teacherCode)}, () -> this.querier.updateGameStatus(this.querier.getGameByTeacherCode(teacherCode).end()));
     }
 
+    @RequestMapping(value = "teacher/game/reset", method = RequestMethod.POST)
+    public @ResponseBody ReturnTemplate<Game> resetTeacherGame(@RequestParam("teacher-code") final String teacherCode) {
+        return new ReturnTemplate<Game>().validateAndProcessRequest(new InputValidator[]{new InputValidator(teacherCode)}, () -> this.querier.resetGame(this.querier.getGameByTeacherCode(teacherCode).reset()));
+    }
+
     @RequestMapping(value = "teacher/add-story", method = RequestMethod.POST)
     public @ResponseBody ReturnTemplate<Story> addStory(@RequestParam("teacher-code") final String teacherCode, @RequestParam("story") final String storyText, @RequestParam("scrambled-words") final String scrambledWordIndexes) {
         return new ReturnTemplate<Story>().validateAndProcessRequest(new InputValidator[]{new InputValidator(teacherCode)}, () -> this.querier.addStory(this.querier.getTeacherByCode(teacherCode).getGame(), new Story(0, storyText, scrambledWordIndexes)));
     }
+
+    /* @RequestMapping(value = "teacher/edit-story", method = RequestMethod.POST)
+    public @ResponseBody ReturnTemplate<Story> addStory(@RequestParam("teacher-code") final String teacherCode, @RequestParam("story") final int storyIndex, @RequestParam("story") final String storyText, @RequestParam("scrambled-words") final String scrambledWordIndexes) {
+        final Teacher teacher = this.querier.getTeacherByCode(teacherCode);
+        final Game game = teacher == null ? null : teacher.getGame();
+        final Story story = game == null ? null : game.getStory(storyIndex);
+        return new ReturnTemplate<Story>().validateAndProcessRequest(new InputValidator[]{new InputValidator(teacherCode)}, () -> {
+            final Game game = this.querier.getTeacherByCode(teacherCode).getGame();
+            this.querier.editStory(game, this.querier.getTeacherByCode(teacherCode).getGame().getStory(storyIndex))
+        });
+    } */
 
 }
